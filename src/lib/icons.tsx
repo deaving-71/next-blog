@@ -7,7 +7,7 @@ export {
   AiOutlineOrderedList as OrderedList,
   AiOutlineUnorderedList as UnorderedList,
   AiOutlineStrikethrough as Strike,
-  AiOutlineLink as Link,
+  AiOutlineLink as LinkIcon,
   AiFillCode as CodeBlock,
 } from "react-icons/ai";
 
@@ -18,7 +18,7 @@ export {
 export { BiBold as Bold } from "react-icons/bi";
 export {
   BsTypeUnderline as Underline,
-  BsCardImage as Image,
+  BsCardImage as ImageIcon,
   BsCode as Code,
 } from "react-icons/bs";
 export { AiOutlineFontColors as FontColors } from "react-icons/ai";

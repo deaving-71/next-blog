@@ -2,81 +2,83 @@ import { type Editor } from "@tiptap/react";
 import { useCallback } from "react";
 
 const useToolbar = (editor: Editor) => {
-  const baseCommand = editor.chain().focus();
-  const baseCanCommand = editor.can().chain().focus();
-
   const Bold = {
-    toggler: () => baseCommand.toggleBold().run(),
-    disabled: !baseCanCommand.toggleBold().run(),
+    toggler: () => editor.chain().focus().toggleBold().run(),
+    disabled: !editor.can().chain().focus().toggleBold().run(),
   };
 
   const Underline = {
-    toggler: () => baseCommand.toggleUnderline().run(),
-    disabled: !baseCanCommand.toggleUnderline().run(),
+    toggler: () => editor.chain().focus().toggleUnderline().run(),
+    disabled: !editor.can().chain().focus().toggleUnderline().run(),
   };
 
   const Italic = {
-    toggler: () => baseCommand.toggleItalic().run(),
-    disabled: !baseCanCommand.toggleItalic().run(),
+    toggler: () => editor.chain().focus().toggleItalic().run(),
+    disabled: !editor.can().chain().focus().toggleItalic().run(),
   };
 
   const Strike = {
-    toggler: () => baseCommand.toggleStrike().run(),
-    disabled: !baseCanCommand.toggleStrike().run(),
+    toggler: () => editor.chain().focus().toggleStrike().run(),
+    disabled: !editor.can().chain().focus().toggleStrike().run(),
   };
 
   const OrderedList = {
-    toggler: () => baseCommand.toggleOrderedList().run(),
+    toggler: () => editor.chain().focus().toggleOrderedList().run(),
     isActive: editor.isActive("orderedList"),
   };
 
   const UnorderedList = {
-    toggler: () => baseCommand.toggleBulletList().run(),
+    toggler: () => editor.chain().focus().toggleBulletList().run(),
     isActive: editor.isActive("bulletList"),
   };
 
   const Subscript = {
-    toggler: () => baseCommand.toggleSubscript().run(),
+    toggler: () => editor.chain().focus().toggleSubscript().run(),
     isActive: editor.isActive("subscript"),
   };
 
   const Superscript = {
-    toggler: () => baseCommand.toggleSuperscript().run(),
+    toggler: () => editor.chain().focus().toggleSuperscript().run(),
     isActive: editor.isActive("superscript"),
   };
 
   const AlignLeft = {
-    toggler: () => baseCommand.setTextAlign("left").run(),
+    toggler: () => editor.chain().focus().setTextAlign("left").run(),
   };
 
   const AlignCenter = {
-    toggler: () => baseCommand.setTextAlign("center").run(),
+    toggler: () => editor.chain().focus().setTextAlign("center").run(),
   };
 
   const AlignRight = {
-    toggler: () => baseCommand.setTextAlign("right").run(),
+    toggler: () => editor.chain().focus().setTextAlign("right").run(),
   };
 
   const Code = {
-    toggler: () => baseCommand.toggleCode().run(),
+    toggler: () => editor.chain().focus().toggleCode().run(),
     isActive: editor.isActive("code"),
   };
 
   const CodeBlock = {
-    toggler: () => baseCommand.toggleCodeBlock().run(),
+    toggler: () => editor.chain().focus().toggleCodeBlock().run(),
     isActive: editor.isActive("codeBlock"),
   };
 
   const TextColor = {
-    unsetter: () => baseCommand.unsetColor().run(),
-    setter: (color: string) => baseCommand.setColor(`#${color}`).run(),
+    unsetter: () => editor.chain().focus().unsetColor().run(),
+    setter: (color: string) =>
+      editor.chain().focus().setColor(`#${color}`).run(),
     isActive: editor.isActive("textStyle"),
   };
 
   const TextHighlight = {
-    unsetter: () => baseCommand.unsetHighlight().run(),
+    unsetter: () => editor.chain().focus().unsetHighlight().run(),
     setter: (color: string) =>
-      baseCommand.setHighlight({ color: `#${color}` }).run(),
+      editor
+        .chain()
+        .focus()
+        .setHighlight({ color: `#${color}` })
+        .run(),
     isActive: editor.isActive("highlight"),
   };
 

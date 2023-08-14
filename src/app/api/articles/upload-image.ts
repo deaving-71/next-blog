@@ -10,7 +10,6 @@ export default async function uploadImage(
 
   const buffer = await file.arrayBuffer();
 
-  //TODO: filter the image .ext
   const fileName =
     imageName ?? `${Date.now()}_${file.name}_image.${getImageExt(file.type)}`;
   const uploadPath = join(process.cwd(), "/uploads/images", fileName);

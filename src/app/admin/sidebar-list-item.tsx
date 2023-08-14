@@ -5,7 +5,7 @@ type Props = {
   data: SidebarListCategory;
 };
 
-export default function SidebarListItem({ data }: Props) {
+export function SidebarListItem({ data }: Props) {
   return (
     <div className="pb-6">
       <h2 className="font-semibold text-lg py-1">{data.category}</h2>
@@ -25,5 +25,24 @@ export default function SidebarListItem({ data }: Props) {
         ))}
       </ul>
     </div>
+  );
+}
+
+export function SidebarListItemIcon({ data }: Props) {
+  return (
+    <>
+      {data.items.map(({ icon, title, href }, idx) => (
+        <li key={idx}>
+          <Link
+            href={href}
+            className="p-2 mb-1 block hover:bg-woodsmoke-900 rounded-lg transition-all"
+          >
+            <div className="flex items-center">
+              <div className="mr-2">{icon}</div>
+            </div>
+          </Link>
+        </li>
+      ))}
+    </>
   );
 }

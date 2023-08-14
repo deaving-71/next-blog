@@ -1,10 +1,10 @@
 "use client";
 
-import clsx from "clsx";
 import { Notification, useNotificationContext } from "@/context";
 import { AiFillCheckCircle, AiFillInfoCircle } from "react-icons/ai";
 import { BiSolidError, BiSolidErrorCircle } from "react-icons/bi";
 import { FaXmark } from "react-icons/fa6";
+import { cn } from "@/lib/utils";
 
 type Props = { children: React.ReactNode };
 
@@ -45,12 +45,13 @@ function ToastNotification({
   type,
   id,
 }: Notification & { id: string }) {
-  const classNames = clsx(
-    "fixed top-2 right-3 z-50 w-[400px] h-[80px] bg-woodsmoke-800 flex p-4 border-l-8 rounded-lg gap-4",
-    color[type]
-  );
   return (
-    <div className={classNames}>
+    <div
+      className={cn(
+        "fixed top-2 right-3 z-50 w-[400px] h-[80px] bg-woodsmoke-800 flex p-4 border-l-8 rounded-lg gap-4",
+        color[type]
+      )}
+    >
       <span className="flex items-center justify-center w-[40px]">
         {Icons[type]}
       </span>

@@ -21,7 +21,7 @@ import { sendArticle, updateArticle } from "@/utils/functions";
 import { Article } from "@/types/Article";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { extractZodErrors, getChangedFields, getFormattedDate } from "@/utils";
@@ -55,7 +55,10 @@ export default function ArticleForm({ article }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [prevArticle, setPrevArticle] = useState<Article | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [keywords, setKeywords] = useState<string[]>(article?.keywords ?? []);
+  const [keywords, setKeywords] = useState<string[]>(
+    article?.keywords ?? ["tag4", "tag2"]
+  );
+  const inputTagRef = useRef<HTMLInputElement | null>(null);
 
   const router = useRouter();
   const {
@@ -63,7 +66,7 @@ export default function ArticleForm({ article }: Props) {
     handleSubmit,
     setValue,
     setError,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
   } = useForm<ArticleForm>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -105,7 +108,8 @@ export default function ArticleForm({ article }: Props) {
 
   const { displayNotification } = useNotificationContext();
 
-  const onSubmit: SubmitHandler<ArticleForm> = async (data) => {
+  const onSubmit: SubmitHandler<ArticleForm> = async (data, e) => {
+    e?.preventDefault();
     try {
       setIsLoading(true);
 
@@ -210,6 +214,7 @@ export default function ArticleForm({ article }: Props) {
 
   function handleOnKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key !== "Enter") return;
+    if (!inputTagRef) return;
 
     const keyword = e.currentTarget.value;
 
@@ -217,6 +222,7 @@ export default function ArticleForm({ article }: Props) {
 
     setKeywords((prev) => [...prev, keyword.trim()]);
 
+    inputTagRef.current?.focus();
     e.currentTarget.value = "";
   }
 
@@ -259,7 +265,7 @@ export default function ArticleForm({ article }: Props) {
           )}
           <Button
             className="bg-white text-woodsmoke-950 font-semibold hover:bg-gray-200 transition-all h-8"
-            disabled={isLoading}
+            disabled={!isValid || isLoading}
           >
             Save
           </Button>
@@ -342,7 +348,7 @@ export default function ArticleForm({ article }: Props) {
             <label htmlFor="keywords" className="text-white font-semibold mb-1">
               Keywords
             </label>
-            <ul className="bg-woodsmoke-950 text-zinc-300 border-port-gore-950 hover:border-port-gore-800 focus:border-port-gore-800 active:border-port-gore-800">
+            <ul className="bg-woodsmoke-950 text-zinc-300 border-port-gore-950 hover:border-port-gore-800 focus:border-port-gore-800 active:border-port-gore-800 p-2 px-3 flex gap-1 rounded-lg flex-wrap">
               {keywords.map((keyword, idx) => (
                 <li
                   key={idx}
@@ -360,8 +366,9 @@ export default function ArticleForm({ article }: Props) {
               ))}
               <li>
                 <input
-                  className="bg-transparent outline-none placeholder:text-sm"
+                  className="bg-transparent outline-none placeholder:text-sm w-[140px]"
                   placeholder="Enter a keyword"
+                  ref={inputTagRef}
                   onKeyDown={(e) => handleOnKeyDown(e)}
                 />
               </li>

@@ -5,9 +5,9 @@ import {
   Bold,
   Code,
   CodeBlock,
-  Image,
+  ImageIcon,
   Italic,
-  Link,
+  LinkIcon,
   OrderedList,
   Strike,
   Subscript,
@@ -78,10 +78,10 @@ export default function Toolbar({ editor }: Props) {
       </Button>
       <Divider />
       <Button onClick={Tool.Image.setter}>
-        <Image size={16} fill="white" />
+        <ImageIcon size={16} fill="white" />
       </Button>
       <Button onClick={Tool.Link.setter}>
-        <Link size={16} fill="white" />
+        <LinkIcon size={16} fill="white" />
       </Button>
     </div>
   );
